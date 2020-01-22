@@ -8,6 +8,7 @@ import de.upb.crypto.craco.interfaces.abe.Attribute;
 import de.upb.crypto.craco.interfaces.abe.BigIntegerAttribute;
 import de.upb.crypto.craco.interfaces.abe.SetOfAttributes;
 import de.upb.crypto.craco.interfaces.pe.PredicateEncryptionScheme;
+import de.upb.crypto.craco.interfaces.policy.BooleanPolicy;
 import de.upb.crypto.craco.interfaces.policy.Policy;
 import de.upb.crypto.craco.interfaces.policy.ThresholdPolicy;
 
@@ -71,10 +72,10 @@ public class ABEBenchmarkConfigBuilder {
         setOfAttributesNamePairs[0] = new SetOfAttributesNamePair(validAttributes, "64 BigInt");
         // default is full AND and full OR
         policyNamePairs[0] = new PolicyNamePair(
-                new ThresholdPolicy(validAttributes.size(), validAttributes), "64 of 64 BigInt"
+                new BooleanPolicy(BooleanPolicy.BooleanOperator.AND, validAttributes), "64 BigInt All AND"
         );
         policyNamePairs[1] = new PolicyNamePair(
-                new ThresholdPolicy(1, validAttributes), "1 of 64 BigInt"
+                new BooleanPolicy(BooleanPolicy.BooleanOperator.OR, validAttributes), "64 BigInt All OR"
         );
 
         numWarmupRuns = 1;
