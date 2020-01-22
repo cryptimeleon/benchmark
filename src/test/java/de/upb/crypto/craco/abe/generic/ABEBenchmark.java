@@ -17,28 +17,27 @@ public class ABEBenchmark {
     private ABEBenchmarkParams params;
     private ABEBenchmarkConfig config;
     private long startTime;
-    private Long[][][] setupTimes;
-    private Long[][][][] encKeyGenTimes;
-    private Long[][][][] decKeyGenTimes;
-    private Long[][][][][] encTimes;
-    private Long[][][][][] decTimes;
+    private Long[][] setupTimes;
+    private Long[][][] encKeyGenTimes;
+    private Long[][][] decKeyGenTimes;
+    private Long[][][][] encTimes;
+    private Long[][][][] decTimes;
 
     public ABEBenchmark(ABEBenchmarkParams params, ABEBenchmarkConfig config) {
         this.params = params;
         this.config = config;
         this.startTime = 0;
-        if (config.getPolicyNamePairs().length < 1 || config.getSetOfAttributesNamePairs().length < 1) {
-            throw new IllegalArgumentException("Need at least one policy and one set of attributes for benchmarking.");
+        if (config.getSetOfAttributesPolicyNameTriples().length < 1) {
+            throw new IllegalArgumentException("Need at least one attribute/policy/name triple for benchmarking.");
         }
-        setupTimes = new Long[config.getSetOfAttributesNamePairs().length][config.getPolicyNamePairs().length]
-                [config.getNumSetups()];
-        encKeyGenTimes = new Long[config.getSetOfAttributesNamePairs().length][config.getPolicyNamePairs().length]
-                [config.getNumSetups()][config.getNumKeyGenerations()];
-        decKeyGenTimes = new Long[config.getSetOfAttributesNamePairs().length][config.getPolicyNamePairs().length]
-                [config.getNumSetups()][config.getNumKeyGenerations()];
-        encTimes = new Long[config.getSetOfAttributesNamePairs().length][config.getPolicyNamePairs().length]
+        setupTimes = new Long[config.getSetOfAttributesPolicyNameTriples().length][config.getNumSetups()];
+        encKeyGenTimes = new Long[config.getSetOfAttributesPolicyNameTriples().length][config.getNumSetups()]
+                [config.getNumKeyGenerations()];
+        decKeyGenTimes = new Long[config.getSetOfAttributesPolicyNameTriples().length][config.getNumSetups()]
+                [config.getNumKeyGenerations()];
+        encTimes = new Long[config.getSetOfAttributesPolicyNameTriples().length]
                 [config.getNumSetups()][config.getNumKeyGenerations()][config.getEncDecCycles()];
-        decTimes = new Long[config.getSetOfAttributesNamePairs().length][config.getPolicyNamePairs().length]
+        decTimes = new Long[config.getSetOfAttributesPolicyNameTriples().length]
                 [config.getNumSetups()][config.getNumKeyGenerations()][config.getEncDecCycles()];
     }
 
@@ -48,15 +47,12 @@ public class ABEBenchmark {
             System.out.println("\t-- Warmup Run " + i + " --");
             doWarmupRun();
         }
-        for (int iAtt = 0; iAtt < config.getSetOfAttributesNamePairs().length; ++iAtt) {
-            System.out.println("-- Selected attributes '" + config.getSetOfAttributesNamePairs()[iAtt].getName()
-                    + "' --");
-            for (int iPol = 0; iPol < config.getPolicyNamePairs().length; ++iPol) {
-                System.out.println("\t-- Selected policy '" + config.getPolicyNamePairs()[iPol].getName() + "' --");
-                for (int i = 0; i < config.getNumSetups(); ++i) {
-                    System.out.println("\t\t-- Benchmark Run " + i + " --");
-                    doRun(i, iAtt, iPol);
-                }
+        for (int i = 0; i < config.getSetOfAttributesPolicyNameTriples().length; ++i) {
+            System.out.println("-- Selected attribute/policy '"
+                    + config.getSetOfAttributesPolicyNameTriples()[i].getName() + "' --");
+            for (int j = 0; j < config.getNumSetups(); ++j) {
+                System.out.println("\t-- Benchmark Run " + j + " --");
+                doRun(j, i);
             }
         }
 
@@ -67,28 +63,26 @@ public class ABEBenchmark {
     }
 
     public void printSummary() {
-        for (int iAtt = 0; iAtt < config.getSetOfAttributesNamePairs().length; ++iAtt) {
-            System.out.println("Summary for attributes '" + config.getSetOfAttributesNamePairs()[iAtt].getName() + "'");
-            for (int iPol = 0; iPol < config.getPolicyNamePairs().length; ++iPol) {
-                System.out.println("\tSummary for policy '" + config.getPolicyNamePairs()[iPol].getName() + "'");
-                System.out.println("\t\tAverage execution time of setup: "
-                        + compute1DAverageTime(setupTimes[iAtt][iPol]));
-                System.out.println("\t\tAverage execution time of encryption key gen: "
-                        + compute2DAverageTime(encKeyGenTimes[iAtt][iPol]));
-                System.out.println("\t\tAverage execution time of decryption key gen: "
-                        + compute2DAverageTime(decKeyGenTimes[iAtt][iPol]));
-                System.out.println("\t\tAverage execution time of encryption: "
-                        + compute3DAverageTimes(encTimes[iAtt][iPol]));
-                System.out.println("\t\tAverage execution time of decryption: "
-                        + compute3DAverageTimes(decTimes[iAtt][iPol]));
-            }
+        for (int i = 0; i < config.getSetOfAttributesPolicyNameTriples().length; ++i) {
+            System.out.println("Summary for attribute/policy '"
+                    + config.getSetOfAttributesPolicyNameTriples()[i].getName() + "'");
+                System.out.println("\tAverage execution time of setup: "
+                        + compute1DAverageTime(setupTimes[i]));
+                System.out.println("\tAverage execution time of encryption key gen: "
+                        + compute2DAverageTime(encKeyGenTimes[i]));
+                System.out.println("\tAverage execution time of decryption key gen: "
+                        + compute2DAverageTime(decKeyGenTimes[i]));
+                System.out.println("\tAverage execution time of encryption: "
+                        + compute3DAverageTimes(encTimes[i]));
+                System.out.println("\tAverage execution time of decryption: "
+                        + compute3DAverageTimes(decTimes[i]));
         }
     }
 
     public void doWarmupRun() {
         // TODO: How do we do this? Do we do same cycles as regular runs or just this one cycle?
-        CiphertextIndex cind = config.getCiphertextIndexAt(0, 0);
-        KeyIndex kind = config.getKeyIndexAt(0, 0);
+        CiphertextIndex cind = config.getCiphertextIndexAt(0);
+        KeyIndex kind = config.getKeyIndexAt(0);
         params.doSetup(kind, cind);
         EncryptionKey encryptionKey = params.getScheme().generateEncryptionKey(
                 cind
@@ -105,45 +99,45 @@ public class ABEBenchmark {
     /**
      * Perform a benchmark run including setup.
      */
-    public void doRun(int numRun, int numAtt, int numPol) {
-        KeyIndex kind = config.getKeyIndexAt(numAtt, numPol);
-        CiphertextIndex cind = config.getCiphertextIndexAt(numAtt, numPol);
+    public void doRun(int numRun, int numAttrPolTriple) {
+        KeyIndex kind = config.getKeyIndexAt(numAttrPolTriple);
+        CiphertextIndex cind = config.getCiphertextIndexAt(numAttrPolTriple);
         startTimer();
         params.doSetup(kind, cind);
-        setupTimes[numAtt][numPol][numRun] = stopTimerAndMeasure("\t\t\tSetup");
+        setupTimes[numAttrPolTriple][numRun] = stopTimerAndMeasure("\t\tSetup");
         for (int i = 0; i < config.getNumKeyGenerations(); ++i) {
             if (config.isPrintDetails())
-                System.out.println("\t\t\t-- Performing Key Generation Number " + i + " --");
+                System.out.println("\t\t-- Performing Key Generation Number " + i + " --");
             startTimer();
             EncryptionKey encryptionKey = params.getScheme().generateEncryptionKey(
                     cind
             );
-            encKeyGenTimes[numAtt][numPol][numRun][i] = stopTimerAndMeasure("\t\t\t\tEncryptionKey Generation");
+            encKeyGenTimes[numAttrPolTriple][numRun][i] = stopTimerAndMeasure("\t\t\tEncryptionKey Generation");
 
             startTimer();
             DecryptionKey decryptionKey = params.getScheme().generateDecryptionKey(
                     params.getMasterSecret(),
                     kind
             );
-            decKeyGenTimes[numAtt][numPol][numRun][i] = stopTimerAndMeasure("\t\t\t\tDecryptionKey Generation");
+            decKeyGenTimes[numAttrPolTriple][numRun][i] = stopTimerAndMeasure("\t\t\tDecryptionKey Generation");
 
             for (int j = 0; j < config.getEncDecCycles(); ++j) {
                 if (config.isPrintDetails())
-                    System.out.println("\t\t\t\t-- Performing Encrypt/Decrypt Cycle " + j + " --");
+                    System.out.println("\t\t\t-- Performing Encrypt/Decrypt Cycle " + j + " --");
 
                 PlainText msg = params.generatePlainText();
 
                 startTimer();
                 CipherText ct = params.getScheme().encrypt(msg, encryptionKey);
 
-                encTimes[numAtt][numPol][numRun][i][j] = stopTimerAndMeasure("\t\t\t\t\tEncryption");
+                encTimes[numAttrPolTriple][numRun][i][j] = stopTimerAndMeasure("\t\t\t\tEncryption");
 
                 startTimer();
                 PlainText msgPrime = params.getScheme().decrypt(ct, decryptionKey);
-                decTimes[numAtt][numPol][numRun][i][j] = stopTimerAndMeasure("\t\t\t\t\tDecryption");
+                decTimes[numAttrPolTriple][numRun][i][j] = stopTimerAndMeasure("\t\t\t\tDecryption");
 
                 if (config.isPrintDetails())
-                    System.out.println("\t\t\t\t\tEncryption/Decryption correct: " + msg.equals(msgPrime));
+                    System.out.println("\t\t\t\tEncryption/Decryption correct: " + msg.equals(msgPrime));
             }
         }
     }
@@ -162,23 +156,23 @@ public class ABEBenchmark {
         return time;
     }
 
-    public Long[][][] getSetupTimes() {
+    public Long[][] getSetupTimes() {
         return setupTimes;
     }
 
-    public Long[][][][] getEncKeyGenTimes() {
+    public Long[][][] getEncKeyGenTimes() {
         return encKeyGenTimes;
     }
 
-    public Long[][][][] getDecKeyGenTimes() {
+    public Long[][][] getDecKeyGenTimes() {
         return decKeyGenTimes;
     }
 
-    public Long[][][][][] getEncTimes() {
+    public Long[][][][] getEncTimes() {
         return encTimes;
     }
 
-    public Long[][][][][] getDecTimes() {
+    public Long[][][][] getDecTimes() {
         return decTimes;
     }
 

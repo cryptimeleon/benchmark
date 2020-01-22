@@ -18,14 +18,9 @@ import java.util.Set;
 public class ABEBenchmarkConfigBuilder {
 
     /**
-     * The attribute sets to test with their names.
+     * The attribute sets with the corresponding policy and the name of the tuple for nice printing.
      */
-    private SetOfAttributesNamePair[] setOfAttributesNamePairs;
-
-    /**
-     * The different policies to test with their names.
-     */
-    private PolicyNamePair[] policyNamePairs;
+    private SetOfAttributesPolicyNameTriple[] setOfAttributesPolicyNameTriples;
 
     /**
      * Whether the scheme being tested is a ciphertext-policy scheme. Makes a difference in the benchmark as
@@ -60,23 +55,26 @@ public class ABEBenchmarkConfigBuilder {
     private boolean printDetails;
 
     public ABEBenchmarkConfigBuilder() {
-        setOfAttributesNamePairs = new SetOfAttributesNamePair[1];
-        policyNamePairs = new PolicyNamePair[2];
-        SetOfAttributes validAttributes = new SetOfAttributes();
-        // 64 attributes as default
-        // TODO: Add more attribute sets to default? (maybe exponentially increasing number)
-        for (int i = 0; i < 64; i++) {
-            BigIntegerAttribute att = new BigIntegerAttribute(i);
-            validAttributes.add(att);
+        int[] attributeDefaults = new int[] {2, 4, 8, 16, 32, 64, 128};
+        // build set of triples with boolean AND only and OR only policies for each attribute set
+        setOfAttributesPolicyNameTriples = new SetOfAttributesPolicyNameTriple[attributeDefaults.length*2];
+        for (int i = 0; i < attributeDefaults.length; ++i)  {
+            SetOfAttributes validAttributes = new SetOfAttributes();
+            for (int j = 0; j < attributeDefaults[i]; ++j) {
+                BigIntegerAttribute att = new BigIntegerAttribute(j);
+                validAttributes.add(att);
+            }
+            setOfAttributesPolicyNameTriples[2*i] = new SetOfAttributesPolicyNameTriple(
+                    validAttributes,
+                    new BooleanPolicy(BooleanPolicy.BooleanOperator.AND, validAttributes),
+                    attributeDefaults[i] + " BigInt ALL AND gates"
+            );
+            setOfAttributesPolicyNameTriples[2*i+1] = new SetOfAttributesPolicyNameTriple(
+                    validAttributes,
+                    new BooleanPolicy(BooleanPolicy.BooleanOperator.OR, validAttributes),
+                    attributeDefaults[i] + " BigInt ALL OR gates"
+            );
         }
-        setOfAttributesNamePairs[0] = new SetOfAttributesNamePair(validAttributes, "64 BigInt");
-        // default is full AND and full OR
-        policyNamePairs[0] = new PolicyNamePair(
-                new BooleanPolicy(BooleanPolicy.BooleanOperator.AND, validAttributes), "64 BigInt All AND"
-        );
-        policyNamePairs[1] = new PolicyNamePair(
-                new BooleanPolicy(BooleanPolicy.BooleanOperator.OR, validAttributes), "64 BigInt All OR"
-        );
 
         numWarmupRuns = 1;
         numSetups = 1;
@@ -89,17 +87,13 @@ public class ABEBenchmarkConfigBuilder {
         if (!isCPABEInitialized) {
             throw new IllegalArgumentException("You must set the type of scheme which this config is for, CP or KP.");
         }
-        return new ABEBenchmarkConfig(setOfAttributesNamePairs, policyNamePairs, isCPABE, numSetups, numKeyGenerations,
+        return new ABEBenchmarkConfig(setOfAttributesPolicyNameTriples, isCPABE, numSetups, numKeyGenerations,
                 numEncDecCycles, numWarmupRuns, printDetails);
     }
 
-    public ABEBenchmarkConfigBuilder setAttributesNamePairs(SetOfAttributesNamePair[] setOfAttributesNamePairs) {
-        this.setOfAttributesNamePairs = setOfAttributesNamePairs;
-        return this;
-    }
-
-    public ABEBenchmarkConfigBuilder setPolicyNamePairs(PolicyNamePair[] policyNamePairs) {
-        this.policyNamePairs = policyNamePairs;
+    public ABEBenchmarkConfigBuilder setSetOfAttributesPolicyNameTriples(SetOfAttributesPolicyNameTriple[]
+                                                                                 setOfAttributesPolicyNameTriples) {
+        this.setOfAttributesPolicyNameTriples = setOfAttributesPolicyNameTriples;
         return this;
     }
 

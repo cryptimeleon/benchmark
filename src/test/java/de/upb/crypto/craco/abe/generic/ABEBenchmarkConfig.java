@@ -12,14 +12,9 @@ import de.upb.crypto.craco.interfaces.pe.PredicateEncryptionScheme;
 public class ABEBenchmarkConfig {
 
     /**
-     * The attribute sets to test with their names.
+     * The attribute sets with the corresponding policy and the name of the tuple for nice printing.
      */
-    private SetOfAttributesNamePair[] setOfAttributesNamePairs;
-
-    /**
-     * The different policies to test with their names.
-     */
-    private PolicyNamePair[] policyNamePairs;
+    private SetOfAttributesPolicyNameTriple[] setOfAttributesPolicyNameTriples;
 
     /**
      * Whether the scheme being tested is a ciphertext-policy scheme. Makes a difference in the benchmark as
@@ -52,11 +47,10 @@ public class ABEBenchmarkConfig {
      */
     private boolean printDetails;
 
-    public ABEBenchmarkConfig(SetOfAttributesNamePair[] attributeSets, PolicyNamePair[] policies,
+    public ABEBenchmarkConfig(SetOfAttributesPolicyNameTriple[] setOfAttributesPolicyNameTriple,
                               boolean isCPABE, int numSetups, int numKeyGenerations, int encDecCycles,
                               int numWarmupRuns, boolean printDetails) {
-        this.setOfAttributesNamePairs = attributeSets;
-        this.policyNamePairs = policies;
+        this.setOfAttributesPolicyNameTriples = setOfAttributesPolicyNameTriple;
         this.isCPABE = isCPABE;
         this.numWarmupRuns = numWarmupRuns;
         this.numSetups = numSetups;
@@ -65,46 +59,26 @@ public class ABEBenchmarkConfig {
         this.printDetails = printDetails;
     }
 
-    public SetOfAttributesNamePair[] getSetOfAttributesNamePairs() {
-        return setOfAttributesNamePairs;
-    }
-
-    public PolicyNamePair[] getPolicyNamePairs() {
-        return policyNamePairs;
+    public SetOfAttributesPolicyNameTriple[] getSetOfAttributesPolicyNameTriples() {
+        return setOfAttributesPolicyNameTriples;
     }
 
     /**
      * Need two indexes here, in the benchmark we won't know which index is the right one.
      */
-    public KeyIndex getKeyIndexAt(int iAtt, int iPol) {
+    public KeyIndex getKeyIndexAt(int i) {
         if (isCPABE) {
-            return setOfAttributesNamePairs[iAtt].getAttributes();
+            return setOfAttributesPolicyNameTriples[i].getSetOfAttributes();
         } else {
-            return policyNamePairs[iPol].getPolicy();
+            return setOfAttributesPolicyNameTriples[i].getPolicy();
         }
     }
 
-    public String getKeyIndexNameAt(int iAtt, int iPol) {
+    public CiphertextIndex getCiphertextIndexAt(int i) {
         if (isCPABE) {
-            return setOfAttributesNamePairs[iAtt].getName();
+            return setOfAttributesPolicyNameTriples[i].getPolicy();
         } else {
-            return policyNamePairs[iPol].getName();
-        }
-    }
-
-    public CiphertextIndex getCiphertextIndexAt(int iAtt, int iPol) {
-        if (isCPABE) {
-            return policyNamePairs[iPol].getPolicy();
-        } else {
-            return setOfAttributesNamePairs[iAtt].getAttributes();
-        }
-    }
-
-    public String getCiphertextIndexNameAt(int iAtt, int iPol) {
-        if (isCPABE) {
-            return policyNamePairs[iPol].getName();
-        } else {
-            return setOfAttributesNamePairs[iAtt].getName();
+            return setOfAttributesPolicyNameTriples[i].getSetOfAttributes();
         }
     }
 
