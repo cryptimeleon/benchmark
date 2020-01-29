@@ -4,7 +4,7 @@ Currently allows easy benchmarking of ABE schemes with support for benchmarking 
 
 ## Prerequisites
 
-Currently, this project uses Java 8. It also uses Gradle as build system so you will likely want to use an IDE with a Gradle plugin.
+Currently, this project uses Java 11. It also uses Gradle as build system so you will likely want to use an IDE with a Gradle plugin.
 
 ## Installation
 
