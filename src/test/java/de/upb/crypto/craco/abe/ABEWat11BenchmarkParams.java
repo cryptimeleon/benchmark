@@ -6,11 +6,8 @@ import de.upb.crypto.craco.abe.cp.large.ABECPWat11PublicParameters;
 import de.upb.crypto.craco.abe.cp.large.ABECPWat11Setup;
 import de.upb.crypto.craco.common.GroupElementPlainText;
 import de.upb.crypto.craco.interfaces.PlainText;
-import de.upb.crypto.craco.interfaces.abe.BigIntegerAttribute;
-import de.upb.crypto.craco.interfaces.abe.SetOfAttributes;
 import de.upb.crypto.craco.interfaces.pe.CiphertextIndex;
 import de.upb.crypto.craco.interfaces.pe.KeyIndex;
-import de.upb.crypto.craco.interfaces.policy.ThresholdPolicy;
 
 
 /**
@@ -21,11 +18,9 @@ import de.upb.crypto.craco.interfaces.policy.ThresholdPolicy;
  * expressive, efficient, and provably secure realization. In Public Key
  * Cryptography, pages 53–70. Springer, 2011
  *
- * @author Raphael Heitjohann, adapted from feidens' original benchmark
+ * @author Raphael Heitjohann, adapted from Fabian Eidens' original benchmark
  */
 public class ABEWat11BenchmarkParams extends ABEBenchmarkParams {
-
-    private SetOfAttributes validAttributes;
 
     @Override
     public void doSetup(KeyIndex kIndex, CiphertextIndex cIndex) {

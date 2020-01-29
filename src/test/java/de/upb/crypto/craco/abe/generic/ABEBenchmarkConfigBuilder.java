@@ -118,7 +118,7 @@ public class ABEBenchmarkConfigBuilder {
         return this;
     }
 
-    public ABEBenchmarkConfigBuilder setNumEncDecCylces(int numEncDecCycles) {
+    public ABEBenchmarkConfigBuilder setNumEncDecCycles(int numEncDecCycles) {
         this.numEncDecCycles = numEncDecCycles;
         return this;
     }
