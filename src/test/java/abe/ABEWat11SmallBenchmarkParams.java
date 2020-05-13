@@ -1,6 +1,6 @@
-package de.upb.crypto.craco.abe;
+package abe;
 
-import de.upb.crypto.craco.abe.generic.ABEBenchmarkParams;
+import de.upb.crypto.benchmark.abe.generic.ABEBenchmarkParams;
 import de.upb.crypto.craco.abe.cp.small.ABECPWat11Small;
 import de.upb.crypto.craco.abe.cp.small.ABECPWat11SmallPublicParameters;
 import de.upb.crypto.craco.abe.cp.small.ABECPWat11SmallSetup;
@@ -12,8 +12,6 @@ import de.upb.crypto.craco.interfaces.abe.SetOfAttributes;
 import de.upb.crypto.craco.interfaces.pe.CiphertextIndex;
 import de.upb.crypto.craco.interfaces.pe.KeyIndex;
 import de.upb.crypto.craco.interfaces.policy.ThresholdPolicy;
-
-import java.util.Collection;
 
 
 public class ABEWat11SmallBenchmarkParams extends ABEBenchmarkParams {

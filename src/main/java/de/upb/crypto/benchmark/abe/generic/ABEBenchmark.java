@@ -1,6 +1,6 @@
-package de.upb.crypto.craco.abe.generic;
+package de.upb.crypto.benchmark.abe.generic;
 
-import de.upb.crypto.craco.generic.BenchmarkDataAnalyzer;
+import de.upb.crypto.benchmark.generic.BenchmarkDataAnalyzer;
 import de.upb.crypto.craco.interfaces.CipherText;
 import de.upb.crypto.craco.interfaces.DecryptionKey;
 import de.upb.crypto.craco.interfaces.EncryptionKey;

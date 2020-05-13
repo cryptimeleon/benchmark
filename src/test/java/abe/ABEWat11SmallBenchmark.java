@@ -1,9 +1,9 @@
-package de.upb.crypto.craco.abe;
+package abe;
 
-import de.upb.crypto.craco.abe.generic.ABEBenchmark;
-import de.upb.crypto.craco.abe.generic.ABEBenchmarkConfig;
-import de.upb.crypto.craco.abe.generic.ABEBenchmarkConfigBuilder;
-import de.upb.crypto.craco.abe.generic.ABEBenchmarkParams;
+import de.upb.crypto.benchmark.abe.generic.ABEBenchmark;
+import de.upb.crypto.benchmark.abe.generic.ABEBenchmarkConfig;
+import de.upb.crypto.benchmark.abe.generic.ABEBenchmarkConfigBuilder;
+import de.upb.crypto.benchmark.abe.generic.ABEBenchmarkParams;
 
 public class ABEWat11SmallBenchmark {
 

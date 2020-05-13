@@ -1,4 +1,4 @@
-package de.upb.crypto.craco.generic;
+package de.upb.crypto.benchmark.generic;
 
 public class BenchmarkDataAnalyzer {
     /**

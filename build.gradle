@@ -1,11 +1,10 @@
 plugins {
-    id 'java'
-    id 'maven'
+    id 'java-library'
     id 'maven-publish'
 }
 
 group = 'de.upb.crypto'
-version = '1.0.0' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
+version = '0.0.2' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
 
 sourceCompatibility = 1.11
 targetCompatibility = 1.11
@@ -23,10 +22,10 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'de.upb.crypto', name: 'craco', version: '1.1.0' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
-    implementation group: 'de.upb.crypto', name: 'mclwrap', version: '0.0.2' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
+    api group: 'de.upb.crypto', name: 'craco', version: '1.1.2' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
+    api group: 'de.upb.crypto', name: 'mclwrap', version: '0.0.3' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
 
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompileOnly group: 'junit', name: 'junit', version: '4.12'
 }
 
 test {
@@ -44,6 +43,28 @@ test {
             println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
         }
     }
+}
+
+task packageTests(type: Jar) {
+    archiveClassifier.set("tests")
+    from sourceSets.test.output+sourceSets.test.allSource
+}
+
+task sourcesJar(type: Jar) {
+    archiveClassifier.set("sources")
+    from sourceSets.main.allJava
+}
+
+task javadocJar(type: Jar) {
+    archiveClassifier.set("javadoc")
+    from javadoc
+}
+
+configurations {
+    testArtifacts
+}
+artifacts {
+    archives packageTests
 }
 
 publishing {
@@ -71,7 +92,8 @@ task enableCompositeBuild {
     group = 'Tools'
     description = 'Enable composite build'
     doLast {
-        new File("../upb.crypto.math/.composite-enable").createNewFile()
+        new File("../upb.crypto.craco/.composite-enable").createNewFile()
+        new File("../upb.crypto.mclwrap/.composite-enable").createNewFile()
     }
 }
 
@@ -79,7 +101,11 @@ task disableCompositeBuild {
     group = 'Tools'
     description = 'Disable composite build'
     doLast {
-        File file = file("../upb.crypto.math/.composite-enable")
+        File file = file("../upb.crypto.craco/.composite-enable")
+        if (file.exists()) {
+            file.delete()
+        }
+        file = file("../upb.crypto.mclwrap/.composite-enable")
         if (file.exists()) {
             file.delete()
         }

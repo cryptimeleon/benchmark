@@ -1,4 +1,4 @@
-package de.upb.crypto.craco.sig;
+package sig;
 
 import de.upb.crypto.craco.common.MessageBlock;
 import de.upb.crypto.craco.common.RingElementPlainText;
@@ -7,12 +7,10 @@ import de.upb.crypto.craco.interfaces.signature.SignatureKeyPair;
 import de.upb.crypto.craco.interfaces.signature.SigningKey;
 import de.upb.crypto.craco.interfaces.signature.StandardMultiMessageSignatureScheme;
 import de.upb.crypto.craco.interfaces.signature.VerificationKey;
-import de.upb.crypto.craco.sig.generic.SigBenchmarkParams;
+import de.upb.crypto.benchmark.sig.generic.SigBenchmarkParams;
 import de.upb.crypto.craco.sig.ps.PSPublicParameters;
-import de.upb.crypto.craco.sig.ps.PSPublicParametersGen;
 import de.upb.crypto.craco.sig.ps.PSSignatureScheme;
 import de.upb.crypto.math.pairings.mcl.MclBilinearGroup;
-import de.upb.crypto.math.pairings.mcl.MclPairing;
 
 public class PSBenchmarkParamsMcl extends SigBenchmarkParams {
 

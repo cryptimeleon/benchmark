@@ -1,6 +1,6 @@
-package de.upb.crypto.craco.abe;
+package abe;
 
-import de.upb.crypto.craco.abe.generic.ABEBenchmarkParams;
+import de.upb.crypto.benchmark.abe.generic.ABEBenchmarkParams;
 import de.upb.crypto.craco.abe.cp.large.ABECPWat11;
 import de.upb.crypto.craco.abe.cp.large.ABECPWat11PublicParameters;
 import de.upb.crypto.craco.abe.cp.large.ABECPWat11Setup;

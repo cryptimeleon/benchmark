@@ -1,4 +1,4 @@
-package de.upb.crypto.craco.sig.generic;
+package de.upb.crypto.benchmark.sig.generic;
 
 import de.upb.crypto.craco.interfaces.PlainText;
 import de.upb.crypto.craco.interfaces.signature.SignatureKeyPair;

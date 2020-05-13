@@ -1,9 +1,9 @@
-package de.upb.crypto.craco.sig;
+package sig;
 
-import de.upb.crypto.craco.sig.generic.SigBenchmark;
-import de.upb.crypto.craco.sig.generic.SigBenchmarkConfig;
-import de.upb.crypto.craco.sig.generic.SigBenchmarkConfigBuilder;
-import de.upb.crypto.craco.sig.generic.SigBenchmarkParams;
+import de.upb.crypto.benchmark.sig.generic.SigBenchmark;
+import de.upb.crypto.benchmark.sig.generic.SigBenchmarkConfig;
+import de.upb.crypto.benchmark.sig.generic.SigBenchmarkConfigBuilder;
+import de.upb.crypto.benchmark.sig.generic.SigBenchmarkParams;
 
 public class PSBenchmark {
 

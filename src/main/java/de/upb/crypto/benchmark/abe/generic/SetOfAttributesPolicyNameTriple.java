@@ -1,4 +1,4 @@
-package de.upb.crypto.craco.abe.generic;
+package de.upb.crypto.benchmark.abe.generic;
 
 import de.upb.crypto.craco.interfaces.abe.SetOfAttributes;
 import de.upb.crypto.craco.interfaces.policy.Policy;

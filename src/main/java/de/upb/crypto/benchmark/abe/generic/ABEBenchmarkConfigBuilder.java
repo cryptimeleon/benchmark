@@ -1,4 +1,4 @@
-package de.upb.crypto.craco.abe.generic;
+package de.upb.crypto.benchmark.abe.generic;
 
 import de.upb.crypto.craco.interfaces.CipherText;
 import de.upb.crypto.craco.interfaces.DecryptionKey;
@@ -11,9 +11,6 @@ import de.upb.crypto.craco.interfaces.pe.PredicateEncryptionScheme;
 import de.upb.crypto.craco.interfaces.policy.BooleanPolicy;
 import de.upb.crypto.craco.interfaces.policy.Policy;
 import de.upb.crypto.craco.interfaces.policy.ThresholdPolicy;
-
-import java.util.Collection;
-import java.util.Set;
 
 public class ABEBenchmarkConfigBuilder {
 
