@@ -1,10 +1,11 @@
 plugins {
     id 'java-library'
-    id 'maven-publish'
+    id 'application'
+    id "maven-publish"
 }
 
 group = 'de.upb.crypto'
-version = '0.0.2' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
+version = '0.0.3' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -24,6 +25,10 @@ repositories {
 dependencies {
     api group: 'de.upb.crypto', name: 'craco', version: '1.1.2' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
     api group: 'de.upb.crypto', name: 'mclwrap', version: '0.0.3' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
+
+    // jmh dependencies for benchmarking
+    api "org.openjdk.jmh:jmh-core:1.23"
+    annotationProcessor "org.openjdk.jmh:jmh-generator-annprocess:1.23"
 
     testCompileOnly group: 'junit', name: 'junit', version: '4.12'
 }
@@ -88,26 +93,13 @@ publishing {
     }
 }
 
-task enableCompositeBuild {
-    group = 'Tools'
-    description = 'Enable composite build'
-    doLast {
-        new File("../upb.crypto.craco/.composite-enable").createNewFile()
-        new File("../upb.crypto.mclwrap/.composite-enable").createNewFile()
-    }
+// can use this to run all benchmarks via task
+task jmh(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = "org.openjdk.jmh.Main"
 }
 
-task disableCompositeBuild {
-    group = 'Tools'
-    description = 'Disable composite build'
-    doLast {
-        File file = file("../upb.crypto.craco/.composite-enable")
-        if (file.exists()) {
-            file.delete()
-        }
-        file = file("../upb.crypto.mclwrap/.composite-enable")
-        if (file.exists()) {
-            file.delete()
-        }
-    }
+// this can be used to run benchmark via the JMH api
+application {
+    mainClass = "de.upb.crypto.benchmark.abe.ABEEncBenchmarkABECPWat11Small"
 }
