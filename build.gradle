@@ -1,6 +1,5 @@
 plugins {
     id 'java-library'
-    id 'application'
     id "maven-publish"
 }
 
@@ -22,13 +21,20 @@ repositories {
     maven { url "https://nexus.cs.upb.de/repository/sfb901-snapshots/" }
 }
 
+sourceSets {
+    jmh {
+        compileClasspath += sourceSets.main.runtimeClasspath
+        runtimeClasspath += sourceSets.main.runtimeClasspath
+    }
+}
+
 dependencies {
     api group: 'de.upb.crypto', name: 'craco', version: '1.1.2' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
     api group: 'de.upb.crypto', name: 'mclwrap', version: '0.0.3' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
 
     // jmh dependencies for benchmarking
-    api "org.openjdk.jmh:jmh-core:1.23"
-    annotationProcessor "org.openjdk.jmh:jmh-generator-annprocess:1.23"
+    jmhImplementation "org.openjdk.jmh:jmh-core:1.23"
+    jmhAnnotationProcessor "org.openjdk.jmh:jmh-generator-annprocess:1.23"
 
     testCompileOnly group: 'junit', name: 'junit', version: '4.12'
 }
@@ -95,11 +101,16 @@ publishing {
 
 // can use this to run all benchmarks via task
 task jmh(type: JavaExec) {
-    classpath = sourceSets.main.runtimeClasspath
+    description = "This task will run all JMH benchmarks"
+    classpath = sourceSets.jmh.runtimeClasspath
     main = "org.openjdk.jmh.Main"
-}
 
-// this can be used to run benchmark via the JMH api
-application {
-    mainClass = "de.upb.crypto.benchmark.abe.ABEEncBenchmarkABECPWat11Small"
+    def include = project.properties.get('include', '');
+    def format = project.properties.get('format', 'json');
+    def resultFile = file("build/reports/jmh/result.${format}")
+    resultFile.parentFile.mkdirs()
+
+    args include
+    args '-rf', format
+    args '-rff', resultFile
 }
