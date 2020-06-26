@@ -56,47 +56,13 @@ test {
     }
 }
 
-task packageTests(type: Jar) {
-    archiveClassifier.set("tests")
-    from sourceSets.test.output+sourceSets.test.allSource
-}
-
-task sourcesJar(type: Jar) {
-    archiveClassifier.set("sources")
-    from sourceSets.main.allJava
-}
-
 task javadocJar(type: Jar) {
-    archiveClassifier.set("javadoc")
     from javadoc
+    archiveClassifier = 'javadoc'
 }
 
-configurations {
-    testArtifacts
-}
 artifacts {
-    archives packageTests
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-
-    }
-
-    repositories {
-        maven {
-            credentials {
-                username = System.getProperty('nexus.user')
-                password = System.getProperty('nexus.key')
-            }
-            def releasesRepoUrl = "https://nexus.cs.upb.de/repository/sfb901-releases/"
-            def snapshotsRepoUrl = "https://nexus.cs.upb.de/repository/sfb901-snapshots/"
-            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-        }
-    }
+    archives javadocJar
 }
 
 // can use this to run all (or specific ones via include and exclude) benchmarks via task
