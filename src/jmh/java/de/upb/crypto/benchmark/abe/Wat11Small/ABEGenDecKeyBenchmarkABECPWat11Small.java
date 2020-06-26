@@ -1,13 +1,11 @@
-package de.upb.crypto.benchmark.abe;
+package de.upb.crypto.benchmark.abe.Wat11Small;
 
 import de.upb.crypto.benchmark.util.AttributeUtils;
 import de.upb.crypto.craco.abe.cp.small.ABECPWat11Small;
 import de.upb.crypto.craco.abe.cp.small.ABECPWat11SmallSetup;
 import de.upb.crypto.craco.interfaces.DecryptionKey;
-import de.upb.crypto.craco.interfaces.abe.BigIntegerAttribute;
 import de.upb.crypto.craco.interfaces.abe.SetOfAttributes;
 import de.upb.crypto.craco.interfaces.pe.MasterSecret;
-import org.junit.Test;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.runner.Runner;
@@ -43,6 +41,11 @@ public class ABEGenDecKeyBenchmarkABECPWat11Small {
     }
 
     @Benchmark
+    @Warmup(iterations = 5)
+    @Measurement(iterations = 5)
+    @BenchmarkMode(Mode.SingleShotTime)
+    @OutputTimeUnit(TimeUnit.MILLISECONDS)
+    @Fork(1)
     public DecryptionKey measureKeyGen() {
         // return key to make sure method call is not optimized away
         return scheme.generateDecryptionKey(msk, attributes);
@@ -52,7 +55,6 @@ public class ABEGenDecKeyBenchmarkABECPWat11Small {
         Options opt = new OptionsBuilder()
                 .include(ABEGenDecKeyBenchmarkABECPWat11Small.class.getName() + ".measureKeyGen")
                 .forks(1)
-                .measurementBatchSize(3)
                 .warmupIterations(5)
                 .timeUnit(TimeUnit.MILLISECONDS)
                 .measurementIterations(5)

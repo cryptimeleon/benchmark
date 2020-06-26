@@ -1,10 +1,6 @@
-package de.upb.crypto.benchmark.abe;
+package de.upb.crypto.benchmark.abe.Wat11;
 
-import de.upb.crypto.benchmark.util.AttributeUtils;
-import de.upb.crypto.craco.abe.cp.small.ABECPWat11SmallSetup;
-import de.upb.crypto.craco.interfaces.abe.BigIntegerAttribute;
-import de.upb.crypto.craco.interfaces.abe.SetOfAttributes;
-import org.junit.Test;
+import de.upb.crypto.craco.abe.cp.large.ABECPWat11Setup;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.runner.Runner;
@@ -17,30 +13,34 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @State(Scope.Thread)
-public class ABESetupBenchmarkABECPWat11Small {
+public class ABESetupBenchmarkABECPWat11 {
 
     @Param({"40", "60"})
     int securityParameter;
 
-    @Param({"16", "24"})
-    int attrSize;
+    @Param({"20", "40"})
+    int lMax;
 
-    SetOfAttributes attributes;
+    @Param({"20", "40"})
+    int n;
 
-    @Setup
-    public void setup() {
-        attributes = AttributeUtils.genAttributes(attrSize);
-    }
+    @Param({"true", "false"})
+    boolean watersHash;
 
     @Benchmark
+    @BenchmarkMode(Mode.SingleShotTime)
+    @Fork(1)
+    @OutputTimeUnit(TimeUnit.MILLISECONDS)
+    @Warmup(iterations = 3)
+    @Measurement(iterations = 5)
     public void measureSetup() {
-        ABECPWat11SmallSetup setup = new ABECPWat11SmallSetup();
-        setup.doKeyGen(securityParameter, attributes, false);
+        ABECPWat11Setup setup = new ABECPWat11Setup();
+        setup.doKeyGen(securityParameter, n, lMax, watersHash, false);
     }
 
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
-                .include(ABESetupBenchmarkABECPWat11Small.class.getName() + ".measureSetup")
+                .include(ABESetupBenchmarkABECPWat11.class.getName() + ".measureSetup")
                 .forks(1)
                 .warmupIterations(3)
                 .timeUnit(TimeUnit.MILLISECONDS)
