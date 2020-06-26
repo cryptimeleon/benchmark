@@ -1,10 +1,10 @@
 plugins {
     id 'java-library'
-    id 'maven-publish'
+    id "maven-publish"
 }
 
 group = 'de.upb.crypto'
-version = '0.0.2' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
+version = '0.0.3' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -21,9 +21,20 @@ repositories {
     maven { url "https://nexus.cs.upb.de/repository/sfb901-snapshots/" }
 }
 
+sourceSets {
+    jmh {
+        compileClasspath += sourceSets.main.runtimeClasspath
+        runtimeClasspath += sourceSets.main.runtimeClasspath
+    }
+}
+
 dependencies {
-    api group: 'de.upb.crypto', name: 'craco', version: '1.1.2' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
+    api group: 'de.upb.crypto', name: 'craco', version: '1.2.0' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
     api group: 'de.upb.crypto', name: 'mclwrap', version: '0.0.3' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
+
+    // jmh dependencies for benchmarking
+    jmhImplementation "org.openjdk.jmh:jmh-core:1.23"
+    jmhAnnotationProcessor "org.openjdk.jmh:jmh-generator-annprocess:1.23"
 
     testCompileOnly group: 'junit', name: 'junit', version: '4.12'
 }
@@ -88,26 +99,22 @@ publishing {
     }
 }
 
-task enableCompositeBuild {
-    group = 'Tools'
-    description = 'Enable composite build'
-    doLast {
-        new File("../upb.crypto.craco/.composite-enable").createNewFile()
-        new File("../upb.crypto.mclwrap/.composite-enable").createNewFile()
-    }
-}
+// can use this to run all (or specific ones via include and exclude) benchmarks via task
+task jmh(type: JavaExec) {
+    description = "This task runs JMH benchmarks"
+    classpath = sourceSets.jmh.runtimeClasspath
+    main = "org.openjdk.jmh.Main"
 
-task disableCompositeBuild {
-    group = 'Tools'
-    description = 'Disable composite build'
-    doLast {
-        File file = file("../upb.crypto.craco/.composite-enable")
-        if (file.exists()) {
-            file.delete()
-        }
-        file = file("../upb.crypto.mclwrap/.composite-enable")
-        if (file.exists()) {
-            file.delete()
-        }
+    def include = project.properties.get('include', '');
+    def exclude = project.properties.get('exclude');
+    def format = project.properties.get('format', 'json');
+    def resultFile = file("build/reports/jmh/result.${format}")
+    resultFile.parentFile.mkdirs()
+
+    args include
+    if (exclude) {
+        args "-e", exclude
     }
+    args '-rf', format
+    args '-rff', resultFile
 }
