@@ -73,13 +73,17 @@ task jmh(type: JavaExec) {
 
     def include = project.properties.get('include', '');
     def exclude = project.properties.get('exclude');
+    def prof = project.properties.get('prof');
     def format = project.properties.get('format', 'json');
     def resultFile = file("build/reports/jmh/result.${format}")
     resultFile.parentFile.mkdirs()
 
     args include
     if (exclude) {
-        args "-e", exclude
+        args '-e', exclude
+    }
+    if (prof) {
+        args '-prof', prof
     }
     args '-rf', format
     args '-rff', resultFile

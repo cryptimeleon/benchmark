@@ -11,6 +11,7 @@ import de.upb.crypto.craco.sig.ps.PSPublicParametersGen;
 import de.upb.crypto.craco.sig.ps18.PS18SignatureScheme;
 import de.upb.crypto.craco.sig.ps18.PS18SigningKey;
 import de.upb.crypto.craco.sig.ps18.PS18VerificationKey;
+import de.upb.crypto.math.pairings.mcl.MclBilinearGroup;
 import org.openjdk.jmh.annotations.*;
 
 import java.util.concurrent.TimeUnit;
@@ -21,18 +22,14 @@ public class PS18VerifyBenchmark {
     @Param({"1", "10", "100"})
     int numMessages;
 
-    @Param({"60", "80"})
-    int securityParameter;
-
     PS18SignatureScheme scheme;
     PlainText plainText;
     Signature signature;
     VerificationKey verificationKey;
 
-    @Setup
+    @Setup(Level.Iteration)
     public void setup() {
-        PSPublicParametersGen ppGen = new PSPublicParametersGen();
-        PSPublicParameters pp = ppGen.generatePublicParameter(securityParameter, false);
+        PSPublicParameters pp = new PSPublicParameters(new MclBilinearGroup().getBilinearMap());
         scheme = new PS18SignatureScheme(pp);
         SignatureKeyPair<? extends PS18VerificationKey, ? extends PS18SigningKey> keyPair =
                 scheme.generateKeyPair(numMessages);
@@ -46,10 +43,11 @@ public class PS18VerifyBenchmark {
     }
 
     @Benchmark
-    @Fork(1)
+    //@Fork(value = 1, jvmArgsAppend = "-agentpath:/home/raphael/async-profiler/build/libasyncProfiler.so=start" +
+    //        ",file=psVerifyProfile")
     @BenchmarkMode(Mode.SingleShotTime)
-    @Warmup(iterations = 5, batchSize = 1)
-    @Measurement(iterations = 5, batchSize = 1)
+    @Warmup(iterations = 3, batchSize = 1)
+    @Measurement(iterations = 10, batchSize = 1)
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
     public void measureVerify() {
         scheme.verify(plainText, signature, verificationKey);
