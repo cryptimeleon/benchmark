@@ -1,6 +1,6 @@
 # upb.crypto.benchmark
 Benchmarking project for the upb.crypto libraries.
-Currently allows easy benchmarking of ABE schemes with support for benchmarking sets of attribute/policy pairs.
+Contains benchmarks and utility methods helpful for implementing benchmarks.
 
 ## Prerequisites
 
