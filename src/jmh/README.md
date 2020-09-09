@@ -1,0 +1,1 @@
+These benchmarks must be run via the `jmh` gradle task defined in build.gradle. They are to be executed via the command line.

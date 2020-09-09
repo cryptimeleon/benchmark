@@ -1,6 +1,6 @@
 package de.upb.crypto.benchmark.sig.ps18;
 
-import de.upb.crypto.craco.common.MessageBlock;
+/*import de.upb.crypto.craco.common.MessageBlock;
 import de.upb.crypto.craco.common.RingElementPlainText;
 import de.upb.crypto.craco.interfaces.PlainText;
 import de.upb.crypto.craco.interfaces.signature.Signature;
@@ -44,8 +44,8 @@ public class PS18VerifyPrecBenchmark {
     }
 
     @Benchmark
-    //@Fork(value = 1, jvmArgsAppend = "-agentpath:/home/raphael/async-profiler/build/libasyncProfiler.so=start" +
-    //        ",file=psPrecVerifyProfile")
+    @Fork(value = 1, jvmArgsAppend = "-agentpath:/home/raphael/async-profiler/build/libasyncProfiler.so=start" +
+            ",file=psPrecVerifyProfile.svg,simple,width=4000")
     @BenchmarkMode(Mode.SingleShotTime)
     @Warmup(iterations = 3, batchSize = 1)
     @Measurement(iterations = 10, batchSize = 1)
@@ -53,4 +53,4 @@ public class PS18VerifyPrecBenchmark {
     public void measureVerify() {
         scheme.verify(plainText, signature, verificationKey);
     }
-}
+}*/

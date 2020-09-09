@@ -11,7 +11,7 @@ import de.upb.crypto.craco.sig.ps.PSPublicParametersGen;
 import de.upb.crypto.craco.sig.ps18.PS18SignatureScheme;
 import de.upb.crypto.craco.sig.ps18.PS18SigningKey;
 import de.upb.crypto.craco.sig.ps18.PS18VerificationKey;
-import de.upb.crypto.math.pairings.mcl.MclBilinearGroup;
+import de.upb.crypto.math.pairings.mcl.MclBilinearGroupProvider;
 import org.openjdk.jmh.annotations.*;
 
 import java.util.concurrent.TimeUnit;
@@ -29,7 +29,7 @@ public class PS18VerifyBenchmark {
 
     @Setup(Level.Iteration)
     public void setup() {
-        PSPublicParameters pp = new PSPublicParameters(new MclBilinearGroup().getBilinearMap());
+        PSPublicParameters pp = new PSPublicParameters(new MclBilinearGroupProvider().provideBilinearGroup());
         scheme = new PS18SignatureScheme(pp);
         SignatureKeyPair<? extends PS18VerificationKey, ? extends PS18SigningKey> keyPair =
                 scheme.generateKeyPair(numMessages);
@@ -43,8 +43,8 @@ public class PS18VerifyBenchmark {
     }
 
     @Benchmark
-    //@Fork(value = 1, jvmArgsAppend = "-agentpath:/home/raphael/async-profiler/build/libasyncProfiler.so=start" +
-    //        ",file=psVerifyProfile")
+    @Fork(value = 1, jvmArgsAppend = "-agentpath:/home/raphael/async-profiler/build/libasyncProfiler.so=start" +
+            ",file=psVerifyProfile.svg,simple,width=4000")
     @BenchmarkMode(Mode.SingleShotTime)
     @Warmup(iterations = 3, batchSize = 1)
     @Measurement(iterations = 10, batchSize = 1)

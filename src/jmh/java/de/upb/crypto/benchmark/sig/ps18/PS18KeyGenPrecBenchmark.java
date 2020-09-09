@@ -1,6 +1,6 @@
 package de.upb.crypto.benchmark.sig.ps18;
 
-import de.upb.crypto.craco.sig.ps.PSPublicParameters;
+/*import de.upb.crypto.craco.sig.ps.PSPublicParameters;
 import de.upb.crypto.craco.sig.ps.PSPublicParametersGen;
 import de.upb.crypto.craco.sig.ps18.PS18SignatureSchemePrec;
 import org.openjdk.jmh.annotations.*;
@@ -34,4 +34,4 @@ public class PS18KeyGenPrecBenchmark {
     public void measureKeyGen() {
         scheme.generateKeyPair(numMessages);
     }
-}
+}*/

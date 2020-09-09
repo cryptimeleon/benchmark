@@ -8,7 +8,7 @@ def msgPrefix = rootProject.name + " settings: "
 
 // do specific snapshot dependency resolution for snapshot builds
 if (!Boolean.valueOf(System.getProperty("disablesnapshot"))) {
-    def compositeLibraries = ["upb.crypto.math", "upb.crypto.craco"]
+    def compositeLibraries = ["upb.crypto.math", "upb.crypto.craco", "upb.crypto.mclwrap"]
     for (String lib : compositeLibraries) {
         def libPrefix = "dependency " + lib
         def libPath = file("../" + lib).getPath()
