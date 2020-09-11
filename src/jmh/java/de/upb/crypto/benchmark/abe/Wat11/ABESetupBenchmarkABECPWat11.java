@@ -2,6 +2,7 @@ package de.upb.crypto.benchmark.abe.Wat11;
 
 import de.upb.crypto.craco.abe.cp.large.ABECPWat11Setup;
 import org.openjdk.jmh.annotations.*;
+import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;

@@ -7,7 +7,6 @@ import de.upb.crypto.craco.interfaces.signature.Signature;
 import de.upb.crypto.craco.interfaces.signature.SignatureKeyPair;
 import de.upb.crypto.craco.interfaces.signature.VerificationKey;
 import de.upb.crypto.craco.sig.ps.PSPublicParameters;
-import de.upb.crypto.craco.sig.ps.PSPublicParametersGen;
 import de.upb.crypto.craco.sig.ps18.PS18SignatureScheme;
 import de.upb.crypto.craco.sig.ps18.PS18SigningKey;
 import de.upb.crypto.craco.sig.ps18.PS18VerificationKey;
@@ -19,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Thread)
 public class PS18VerifyBenchmark {
 
-    @Param({"1", "10", "100"})
+    @Param({"1", "10"})
     int numMessages;
 
     PS18SignatureScheme scheme;
@@ -44,12 +43,12 @@ public class PS18VerifyBenchmark {
 
     @Benchmark
     @Fork(value = 1, jvmArgsAppend = "-agentpath:/home/raphael/async-profiler/build/libasyncProfiler.so=start" +
-            ",file=psVerifyProfile.svg,simple,width=4000")
+            ",file=psVerifyProfile.svg,simple,width=8000")
     @BenchmarkMode(Mode.SingleShotTime)
     @Warmup(iterations = 3, batchSize = 1)
     @Measurement(iterations = 10, batchSize = 1)
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
-    public void measureVerify() {
-        scheme.verify(plainText, signature, verificationKey);
+    public Boolean measureVerify() {
+        return scheme.verify(plainText, signature, verificationKey);
     }
 }

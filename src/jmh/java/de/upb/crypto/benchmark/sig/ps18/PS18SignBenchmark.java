@@ -7,6 +7,7 @@ import de.upb.crypto.craco.sig.ps.PSPublicParameters;
 import de.upb.crypto.craco.sig.ps.PSPublicParametersGen;
 import de.upb.crypto.craco.sig.ps18.PS18SignatureScheme;
 import de.upb.crypto.craco.sig.ps18.PS18SigningKey;
+import de.upb.crypto.math.serialization.Representation;
 import org.openjdk.jmh.annotations.*;
 
 import java.util.concurrent.TimeUnit;
@@ -14,10 +15,10 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Thread)
 public class PS18SignBenchmark {
 
-    @Param({"1", "10", "100"})
+    @Param({"1", "10"})
     int numMessages;
 
-    @Param({"60", "80"})
+    @Param({"60"})
     int securityParameter;
 
     PS18SignatureScheme scheme;
@@ -38,12 +39,13 @@ public class PS18SignBenchmark {
     }
 
     @Benchmark
-    @Fork(1)
+    @Fork(value = 1, jvmArgsAppend = "-agentpath:/home/raphael/async-profiler/build/libasyncProfiler.so=start" +
+            ",file=psSignProfile.svg,simple,width=4000")
     @BenchmarkMode(Mode.SingleShotTime)
     @Warmup(iterations = 5, batchSize = 50)
     @Measurement(iterations = 5, batchSize = 50)
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
-    public void measureSign() {
-        scheme.sign(plainText, signKey);
+    public Representation measureSign() {
+        return scheme.sign(plainText, signKey).getRepresentation();
     }
 }

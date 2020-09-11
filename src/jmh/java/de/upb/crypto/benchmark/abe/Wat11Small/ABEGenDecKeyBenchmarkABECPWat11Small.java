@@ -6,6 +6,7 @@ import de.upb.crypto.craco.abe.cp.small.ABECPWat11SmallSetup;
 import de.upb.crypto.craco.interfaces.DecryptionKey;
 import de.upb.crypto.craco.interfaces.abe.SetOfAttributes;
 import de.upb.crypto.craco.interfaces.pe.MasterSecret;
+import de.upb.crypto.math.serialization.Representation;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.runner.Runner;
@@ -46,9 +47,9 @@ public class ABEGenDecKeyBenchmarkABECPWat11Small {
     @BenchmarkMode(Mode.SingleShotTime)
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
     @Fork(1)
-    public DecryptionKey measureKeyGen() {
+    public Representation measureKeyGen() {
         // return key to make sure method call is not optimized away
-        return scheme.generateDecryptionKey(msk, attributes);
+        return scheme.generateDecryptionKey(msk, attributes).getRepresentation();
     }
 
     public static void main(String[] args) throws RunnerException {

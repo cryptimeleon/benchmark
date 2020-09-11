@@ -10,6 +10,7 @@ import de.upb.crypto.craco.interfaces.EncryptionKey;
 import de.upb.crypto.craco.interfaces.PlainText;
 import de.upb.crypto.craco.interfaces.abe.SetOfAttributes;
 import de.upb.crypto.craco.interfaces.policy.BooleanPolicy;
+import de.upb.crypto.math.serialization.Representation;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.results.format.ResultFormatType;
@@ -59,8 +60,8 @@ public class ABEDecBenchmarkABECPWat11Small {
     @BenchmarkMode(Mode.SingleShotTime)
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
     @Fork(1)
-    public PlainText measureDecrypt() {
-        return scheme.decrypt(cipherText, decKey);
+    public Representation measureDecrypt() {
+        return scheme.decrypt(cipherText, decKey).getRepresentation();
     }
 
     public static void main(String[] args) throws RunnerException {

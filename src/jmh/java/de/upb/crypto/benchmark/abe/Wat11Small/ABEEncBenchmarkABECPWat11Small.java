@@ -8,6 +8,7 @@ import de.upb.crypto.craco.interfaces.CipherText;
 import de.upb.crypto.craco.interfaces.EncryptionKey;
 import de.upb.crypto.craco.interfaces.PlainText;
 import de.upb.crypto.craco.interfaces.policy.BooleanPolicy;
+import de.upb.crypto.math.serialization.Representation;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.runner.Runner;
@@ -53,8 +54,8 @@ public class ABEEncBenchmarkABECPWat11Small {
     @BenchmarkMode(Mode.SingleShotTime)
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
     @Fork(1)
-    public CipherText measureEncrypt() {
-        return scheme.encrypt(plainText, encKey);
+    public Representation measureEncrypt() {
+        return scheme.encrypt(plainText, encKey).getRepresentation();
     }
 
     public static void main(String[] args) throws RunnerException {
