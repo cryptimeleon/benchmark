@@ -41,6 +41,9 @@ public class PS18VerifyCountingBenchmark {
             }
             plainText = new MessageBlock(messages);
             signature = scheme.sign(plainText, keyPair.getSigningKey());
+            // Get all representations to force computation
+            signature.getRepresentation();
+            verificationKey.getRepresentation();
             bilGroup.resetCounters();
             System.out.println("********** Running regular benchmark with numMessages = " + numMessages + " *********");
             scheme.verify(plainText, signature, verificationKey);
