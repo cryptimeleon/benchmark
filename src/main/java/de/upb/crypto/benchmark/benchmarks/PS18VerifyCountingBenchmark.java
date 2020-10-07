@@ -2,17 +2,15 @@ package de.upb.crypto.benchmark.benchmarks;
 
 import de.upb.crypto.craco.common.MessageBlock;
 import de.upb.crypto.craco.common.RingElementPlainText;
-import de.upb.crypto.craco.interfaces.PlainText;
-import de.upb.crypto.craco.interfaces.signature.Signature;
-import de.upb.crypto.craco.interfaces.signature.SignatureKeyPair;
-import de.upb.crypto.craco.interfaces.signature.VerificationKey;
+import de.upb.crypto.craco.common.interfaces.PlainText;
+import de.upb.crypto.craco.sig.interfaces.Signature;
+import de.upb.crypto.craco.sig.interfaces.SignatureKeyPair;
 import de.upb.crypto.craco.sig.ps.PSPublicParameters;
 import de.upb.crypto.craco.sig.ps18.*;
 import de.upb.crypto.math.factory.BilinearGroup;
 import de.upb.crypto.math.factory.BilinearGroupRequirement;
 import de.upb.crypto.math.pairings.debug.count.CountingBilinearGroup;
 import de.upb.crypto.math.pairings.debug.count.CountingBilinearGroupProvider;
-import de.upb.crypto.math.structures.cartesian.GroupElementVector;
 
 public class PS18VerifyCountingBenchmark {
 

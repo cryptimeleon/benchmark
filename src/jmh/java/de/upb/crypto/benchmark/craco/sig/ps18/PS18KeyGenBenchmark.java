@@ -1,8 +1,8 @@
-package de.upb.crypto.benchmark.sig.ps18;
+package de.upb.crypto.benchmark.craco.sig.ps18;
 
-import de.upb.crypto.craco.interfaces.signature.SignatureKeyPair;
-import de.upb.crypto.craco.interfaces.signature.SigningKey;
-import de.upb.crypto.craco.interfaces.signature.VerificationKey;
+import de.upb.crypto.craco.sig.interfaces.SignatureKeyPair;
+import de.upb.crypto.craco.sig.interfaces.SigningKey;
+import de.upb.crypto.craco.sig.interfaces.VerificationKey;
 import de.upb.crypto.craco.sig.ps.PSPublicParameters;
 import de.upb.crypto.craco.sig.ps.PSPublicParametersGen;
 import de.upb.crypto.craco.sig.ps18.PS18SignatureScheme;

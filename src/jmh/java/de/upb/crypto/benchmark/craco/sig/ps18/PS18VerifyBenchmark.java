@@ -1,11 +1,11 @@
-package de.upb.crypto.benchmark.sig.ps18;
+package de.upb.crypto.benchmark.craco.sig.ps18;
 
 import de.upb.crypto.craco.common.MessageBlock;
 import de.upb.crypto.craco.common.RingElementPlainText;
-import de.upb.crypto.craco.interfaces.PlainText;
-import de.upb.crypto.craco.interfaces.signature.Signature;
-import de.upb.crypto.craco.interfaces.signature.SignatureKeyPair;
-import de.upb.crypto.craco.interfaces.signature.VerificationKey;
+import de.upb.crypto.craco.common.interfaces.PlainText;
+import de.upb.crypto.craco.sig.interfaces.Signature;
+import de.upb.crypto.craco.sig.interfaces.SignatureKeyPair;
+import de.upb.crypto.craco.sig.interfaces.VerificationKey;
 import de.upb.crypto.craco.sig.ps.PSPublicParameters;
 import de.upb.crypto.craco.sig.ps18.PS18SignatureScheme;
 import de.upb.crypto.craco.sig.ps18.PS18SigningKey;

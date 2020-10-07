@@ -3,4 +3,4 @@ out/**
 build/**
 .idea/**
 gradle.properties
-*.svg
+results/**

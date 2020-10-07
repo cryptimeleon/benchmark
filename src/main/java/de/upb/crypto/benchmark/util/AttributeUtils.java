@@ -1,7 +1,7 @@
 package de.upb.crypto.benchmark.util;
 
-import de.upb.crypto.craco.interfaces.abe.BigIntegerAttribute;
-import de.upb.crypto.craco.interfaces.abe.SetOfAttributes;
+import de.upb.crypto.craco.abe.interfaces.BigIntegerAttribute;
+import de.upb.crypto.craco.abe.interfaces.SetOfAttributes;
 
 public class AttributeUtils {
 

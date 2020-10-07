@@ -1,11 +1,10 @@
-package de.upb.crypto.benchmark.abe.Wat11Small;
+package de.upb.crypto.benchmark.craco.abe.Wat11Small;
 
 import de.upb.crypto.benchmark.util.AttributeUtils;
 import de.upb.crypto.craco.abe.cp.small.ABECPWat11Small;
 import de.upb.crypto.craco.abe.cp.small.ABECPWat11SmallSetup;
-import de.upb.crypto.craco.interfaces.DecryptionKey;
-import de.upb.crypto.craco.interfaces.abe.SetOfAttributes;
-import de.upb.crypto.craco.interfaces.pe.MasterSecret;
+import de.upb.crypto.craco.abe.interfaces.SetOfAttributes;
+import de.upb.crypto.craco.common.interfaces.pe.MasterSecret;
 import de.upb.crypto.math.serialization.Representation;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.results.RunResult;

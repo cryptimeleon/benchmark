@@ -1,10 +1,10 @@
-package de.upb.crypto.benchmark.abe.Wat11AsymSmall;
+package de.upb.crypto.benchmark.craco.abe.Wat11AsymSmall;
 
 import de.upb.crypto.benchmark.util.AttributeUtils;
 import de.upb.crypto.craco.abe.cp.small.asymmetric.ABECPWat11AsymSmall;
 import de.upb.crypto.craco.abe.cp.small.asymmetric.ABECPWat11AsymSmallSetup;
 import de.upb.crypto.craco.common.GroupElementPlainText;
-import de.upb.crypto.craco.interfaces.policy.BooleanPolicy;
+import de.upb.crypto.craco.common.interfaces.policy.BooleanPolicy;
 import de.upb.crypto.math.pairings.mcl.MclBilinearGroupProvider;
 import org.openjdk.jmh.annotations.Setup;
 
