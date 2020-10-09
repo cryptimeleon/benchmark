@@ -1,27 +1,28 @@
 package de.upb.crypto.benchmark.math.expalgs;
 
 
-import de.upb.crypto.math.factory.BilinearGroup;
+/*import de.upb.crypto.math.factory.BilinearGroup;
 import de.upb.crypto.math.factory.BilinearGroupFactory;
 import de.upb.crypto.math.interfaces.structures.Group;
 import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
 import de.upb.crypto.math.structures.groups.exp.ExponentiationAlgorithms;
 import de.upb.crypto.math.structures.groups.lazy.LazyGroupElement;
-import org.openjdk.jmh.annotations.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigInteger;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 @State(Scope.Thread)
-public class slidingWindowsExpComparison {
+public class slidingWindowExpComparison {
 
     @Param({"G1", "GT"})
     String groupSelection;
 
     GroupElementImpl elem;
     BigInteger exponent;
+    Random rand = new Random(23634682);
 
     @Setup(Level.Iteration)
     public void setup() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
@@ -45,7 +46,7 @@ public class slidingWindowsExpComparison {
         Method getValue = LazyGroupElement.class.getDeclaredMethod("getConcreteValue");
         getValue.setAccessible(true);
         elem = (GroupElementImpl) getValue.invoke(selectedGroup.getUniformlyRandomNonNeutral());
-        exponent = BigInteger.valueOf(-65337); // TODO: Do random gen here too?
+        exponent = BigInteger.valueOf(rand.nextLong());
     }
 
     @Benchmark
@@ -80,4 +81,4 @@ public class slidingWindowsExpComparison {
     public GroupElementImpl measureA3() {
         return ExponentiationAlgorithms.slidingWindowExpA3(elem, exponent, null, 4);
     }
-}
+}*/
