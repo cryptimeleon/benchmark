@@ -20,9 +20,9 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 @State(Scope.Thread)
-public class slidingWindowMultiExpComparison {
+public class SlidingWindowMultiExpComparison {
 
-    @Param({"G1"})
+    @Param({"GT"})
     String groupSelection;
 
     Multiexponentiation multiexponentiation;
@@ -51,24 +51,24 @@ public class slidingWindowMultiExpComparison {
 
     @Benchmark
     @Fork(value = 3, jvmArgsAppend = "-agentpath:/home/raphael/async-profiler/build/libasyncProfiler.so=start" +
-            ",file=results/slidingA1G1Window4.svg,simple,width=6000")
+            ",file=results/slidingA1GTWindow8.svg,simple,width=6000")
     @BenchmarkMode(Mode.AverageTime)
     @Warmup(iterations = 1, time = 5)
     @Measurement(iterations = 2, time = 5)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public GroupElementImpl measureSlidingA1() {
-        return ExponentiationAlgorithms.interleavingSlidingWindowMultiExpA1(convertedMultiexp, 4);
+        return ExponentiationAlgorithms.interleavingSlidingWindowMultiExpA1(convertedMultiexp, 8);
     }
 
     @Benchmark
     @Fork(value = 3, jvmArgsAppend = "-agentpath:/home/raphael/async-profiler/build/libasyncProfiler.so=start" +
-            ",file=results/slidingA2G1Window4.svg,simple,width=6000")
+            ",file=results/slidingA2GTWindow8.svg,simple,width=6000")
     @BenchmarkMode(Mode.AverageTime)
     @Warmup(iterations = 1, time = 5)
     @Measurement(iterations = 2, time = 5)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public GroupElementImpl measureSlidingA2() {
-        return ExponentiationAlgorithms.interleavingSlidingWindowMultiExpA2(multiexponentiation, 4);
+        return ExponentiationAlgorithms.interleavingSlidingWindowMultiExpA2(multiexponentiation, 8);
     }
 
     public static Multiexponentiation genMultiExp(Group group, int numTerms) throws NoSuchMethodException,

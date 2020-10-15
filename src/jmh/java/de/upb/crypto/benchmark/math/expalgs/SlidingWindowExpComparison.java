@@ -15,7 +15,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 @State(Scope.Thread)
-public class slidingWindowExpComparison {
+public class SlidingWindowExpComparison {
 
     @Param({"G1", "GT"})
     String groupSelection;
