@@ -26,13 +26,10 @@ public class SlidingVsWnafMultiExpComparison {
     String groupSelection;
 
     Multiexponentiation multiexponentiation;
-    Multiexponentiation convertedMultiexp;
 
     @Setup(Level.Iteration)
     public void setup() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        BilinearGroupFactory fac = new BilinearGroupFactory(128);
-        fac.setRequirements(BilinearGroup.Type.TYPE_3);
-        BilinearGroup bilGroup = fac.createBilinearGroup();
+        BilinearGroup bilGroup = new MclBilinearGroupProvider().provideBilinearGroup();
         Group selectedGroup;
         switch (groupSelection) {
             case "G1":
@@ -48,7 +45,6 @@ public class SlidingVsWnafMultiExpComparison {
                 throw new IllegalArgumentException("Invalid selected group " + groupSelection);
         }
         multiexponentiation = genMultiExp(selectedGroup, 15);
-        //convertedMultiexp = ExponentiationAlgorithms.convertToNonNegativeExponents(multiexponentiation);
     }
 
     @Benchmark
@@ -57,18 +53,8 @@ public class SlidingVsWnafMultiExpComparison {
     @Warmup(iterations = 1, time = 5)
     @Measurement(iterations = 2, time = 5)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public GroupElementImpl measureSlidingA1() {
-        return ExponentiationAlgorithms.interleavingSlidingWindowMultiExpA1(multiexponentiation, 4);
-    }
-
-    @Benchmark
-    @Fork(value = 3)
-    @BenchmarkMode(Mode.AverageTime)
-    @Warmup(iterations = 1, time = 5)
-    @Measurement(iterations = 2, time = 5)
-    @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public GroupElementImpl measureSlidingA2() {
-        return ExponentiationAlgorithms.interleavingSlidingWindowMultiExpA2(multiexponentiation, 4);
+    public GroupElementImpl measureSliding() {
+        return ExponentiationAlgorithms.interleavingSlidingWindowMultiExp(multiexponentiation, 8);
     }
 
     @Benchmark
@@ -78,7 +64,7 @@ public class SlidingVsWnafMultiExpComparison {
     @Measurement(iterations = 2, time = 5)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public GroupElementImpl measureWnaf() {
-        return ExponentiationAlgorithms.interleavingWnafMultiExp(multiexponentiation, 4);
+        return ExponentiationAlgorithms.interleavingWnafMultiExp(multiexponentiation, 8);
     }
 
     public static Multiexponentiation genMultiExp(Group group, int numTerms) throws NoSuchMethodException,
