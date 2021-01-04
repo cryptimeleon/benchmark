@@ -1,12 +1,14 @@
 package de.upb.crypto.benchmark.math.expalgs;
 
-import de.upb.crypto.math.factory.BilinearGroup;
 import de.upb.crypto.math.interfaces.structures.Group;
 import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
-import de.upb.crypto.math.pairings.mcl.MclBilinearGroupProvider;
+import de.upb.crypto.math.pairings.generic.BilinearGroup;
+import de.upb.crypto.math.pairings.mcl.MclBilinearGroup;
+import de.upb.crypto.math.pairings.mcl.MclBilinearGroupImpl;
 import de.upb.crypto.math.structures.groups.exp.ExponentiationAlgorithms;
 import de.upb.crypto.math.structures.groups.exp.MultiExpTerm;
 import de.upb.crypto.math.structures.groups.exp.Multiexponentiation;
+import de.upb.crypto.math.structures.groups.lazy.LazyBilinearGroup;
 import de.upb.crypto.math.structures.groups.lazy.LazyGroupElement;
 import org.openjdk.jmh.annotations.*;
 
@@ -31,7 +33,7 @@ public class SlidingMultiExpPrecompTest {
 
     @Setup(Level.Iteration)
     public void setup() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        BilinearGroup bilGroup = new MclBilinearGroupProvider().provideBilinearGroup();
+        BilinearGroup bilGroup = new MclBilinearGroup();
         Group selectedGroup;
         switch (groupSelection) {
             case "G1":

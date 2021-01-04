@@ -7,10 +7,8 @@ import de.upb.crypto.craco.sig.interfaces.Signature;
 import de.upb.crypto.craco.sig.interfaces.SignatureKeyPair;
 import de.upb.crypto.craco.sig.ps.PSPublicParameters;
 import de.upb.crypto.craco.sig.ps18.*;
-import de.upb.crypto.math.factory.BilinearGroup;
-import de.upb.crypto.math.factory.BilinearGroupRequirement;
-import de.upb.crypto.math.pairings.debug.count.CountingBilinearGroup;
-import de.upb.crypto.math.pairings.debug.count.CountingBilinearGroupProvider;
+import de.upb.crypto.math.pairings.counting.CountingBilinearGroup;
+import de.upb.crypto.math.pairings.generic.BilinearGroup;
 
 public class PS18VerifyCountingBenchmark {
 
@@ -24,10 +22,7 @@ public class PS18VerifyCountingBenchmark {
         CountingBilinearGroup bilGroup;
 
         for (int numMessages : numMessageParams) {
-            bilGroup = (CountingBilinearGroup) new CountingBilinearGroupProvider().provideBilinearGroup(
-                    128,
-                    new BilinearGroupRequirement(BilinearGroup.Type.TYPE_3)
-            );
+            bilGroup = new CountingBilinearGroup(128, BilinearGroup.Type.TYPE_3);
             PSPublicParameters pp = new PSPublicParameters(bilGroup);
             scheme = new PS18SignatureScheme(pp);
             SignatureKeyPair<? extends PS18VerificationKey, ? extends PS18SigningKey> keyPair =

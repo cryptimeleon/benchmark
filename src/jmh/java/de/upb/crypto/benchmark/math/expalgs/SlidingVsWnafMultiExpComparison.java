@@ -1,12 +1,12 @@
 package de.upb.crypto.benchmark.math.expalgs;
 
-import de.upb.crypto.math.factory.BilinearGroup;
-import de.upb.crypto.math.factory.BilinearGroupFactory;
 import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
-import de.upb.crypto.math.pairings.mcl.MclBilinearGroupProvider;
+import de.upb.crypto.math.pairings.generic.BilinearGroup;
+import de.upb.crypto.math.pairings.type1.supersingular.SupersingularBilinearGroup;
 import de.upb.crypto.math.structures.groups.exp.ExponentiationAlgorithms;
 import de.upb.crypto.math.structures.groups.exp.MultiExpTerm;
 import de.upb.crypto.math.structures.groups.exp.Multiexponentiation;
+import de.upb.crypto.math.structures.groups.exp.SmallExponentPrecomputation;
 import de.upb.crypto.math.structures.groups.lazy.LazyGroupElement;
 import de.upb.crypto.math.interfaces.structures.Group;
 import org.openjdk.jmh.annotations.*;
@@ -25,11 +25,14 @@ public class SlidingVsWnafMultiExpComparison {
     @Param({"G1"})
     String groupSelection;
 
-    Multiexponentiation multiexponentiation;
+    Multiexponentiation wnafMultiexponentiation;
+    Multiexponentiation slidingMultiexponentiation;
+
 
     @Setup(Level.Iteration)
     public void setup() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        BilinearGroup bilGroup = new MclBilinearGroupProvider().provideBilinearGroup();
+        BilinearGroup bilGroup = new SupersingularBilinearGroup(128);
+        //BilinearGroup bilGroup = new MclBilinearGroupProvider().provideBilinearGroup();
         Group selectedGroup;
         switch (groupSelection) {
             case "G1":
@@ -44,27 +47,42 @@ public class SlidingVsWnafMultiExpComparison {
             default:
                 throw new IllegalArgumentException("Invalid selected group " + groupSelection);
         }
-        multiexponentiation = genMultiExp(selectedGroup, 15);
+        wnafMultiexponentiation = genMultiExp(selectedGroup, 15);
+        slidingMultiexponentiation = new Multiexponentiation();
+        wnafMultiexponentiation.getTerms().forEach(
+                t -> slidingMultiexponentiation.put(t.getBase(), t.getExponent(),
+                        new SmallExponentPrecomputation(t.getBase()))
+        );
+        wnafMultiexponentiation.getTerms().forEach(
+                t -> t.getPrecomputation().compute(8, false)
+        );
+        slidingMultiexponentiation.getTerms().forEach(
+                t -> t.getPrecomputation().compute(8, false)
+        );
+        slidingMultiexponentiation.getTerms().forEach(
+                t -> t.getPrecomputation().computeNegativePowers(8, true)
+        );
     }
 
     @Benchmark
-    @Fork(value = 3)
+    @Fork(value = 4)
     @BenchmarkMode(Mode.AverageTime)
-    @Warmup(iterations = 1, time = 5)
-    @Measurement(iterations = 2, time = 5)
+    @Warmup(iterations = 1, time = 1)
+    @Measurement(iterations = 10, time = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public GroupElementImpl measureSliding() {
-        return ExponentiationAlgorithms.interleavingSlidingWindowMultiExp(multiexponentiation, 8);
+        return ExponentiationAlgorithms.interleavingSlidingWindowMultiExp(slidingMultiexponentiation,
+                8);
     }
 
     @Benchmark
-    @Fork(value = 3)
+    @Fork(value = 4)
     @BenchmarkMode(Mode.AverageTime)
-    @Warmup(iterations = 1, time = 5)
-    @Measurement(iterations = 2, time = 5)
+    @Warmup(iterations = 1, time = 1)
+    @Measurement(iterations = 10, time = 1)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public GroupElementImpl measureWnaf() {
-        return ExponentiationAlgorithms.interleavingWnafMultiExp(multiexponentiation, 8);
+        return ExponentiationAlgorithms.interleavingWnafMultiExp(wnafMultiexponentiation, 8);
     }
 
     public static Multiexponentiation genMultiExp(Group group, int numTerms) throws NoSuchMethodException,
@@ -75,11 +93,7 @@ public class SlidingVsWnafMultiExpComparison {
         Method getValue = LazyGroupElement.class.getDeclaredMethod("getConcreteValue");
         getValue.setAccessible(true);
         for (int i = 0; i < numTerms; ++i) {
-            // ensure negativity
-            long exponent = rand.nextLong();
-            if (exponent > 0) {
-                exponent = -exponent;
-            }
+            long exponent = rand.nextInt();
             multiexponentiation.put(
                     new MultiExpTerm(
                             (GroupElementImpl) getValue.invoke(group.getUniformlyRandomNonNeutral()),
