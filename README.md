@@ -1,5 +1,5 @@
-# upb.crypto.benchmark
-Benchmarking project for the upb.crypto libraries.
+# Cryptimeleon Benchmark
+Benchmarking project for the Cryptimeleon libraries.
 Contains benchmarks and utility methods helpful for implementing benchmarks.
 
 ## Prerequisites
