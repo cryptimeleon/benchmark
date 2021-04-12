@@ -31,6 +31,7 @@ sourceSets {
 dependencies {
     api group: 'org.cryptimeleon', name: 'craco', version: '1.0.0' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
     api group: 'org.cryptimeleon', name: 'mclwrap', version: '1.0.0' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
+    api group: 'org.cryptimeleon', name: 'predenc', version: '1.0.0' + (Boolean.valueOf(System.getProperty("disablesnapshot")) ? "" : "-SNAPSHOT")
 
     // jmh dependencies for benchmarking
     jmhImplementation "org.openjdk.jmh:jmh-core:1.23"

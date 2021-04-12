@@ -1,9 +1,9 @@
 package org.cryptimeleon.benchmark.math.groups;
 
-import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
-import de.upb.crypto.math.interfaces.structures.group.impl.GroupImpl;
-import de.upb.crypto.math.pairings.generic.BilinearGroupImpl;
-import de.upb.crypto.math.pairings.mcl.MclBilinearGroupImpl;
+import org.cryptimeleon.math.structures.groups.GroupElementImpl;
+import org.cryptimeleon.math.structures.groups.GroupImpl;
+import org.cryptimeleon.math.structures.groups.elliptic.BilinearGroupImpl;
+import org.cryptimeleon.math.structures.groups.elliptic.type3.mcl.MclBilinearGroupImpl;
 import org.openjdk.jmh.annotations.*;
 
 import java.util.concurrent.TimeUnit;

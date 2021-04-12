@@ -1,11 +1,11 @@
 package org.cryptimeleon.benchmark.craco.sig.ps18;
 
-import de.upb.crypto.craco.sig.interfaces.SignatureKeyPair;
-import de.upb.crypto.craco.sig.interfaces.SigningKey;
-import de.upb.crypto.craco.sig.interfaces.VerificationKey;
-import de.upb.crypto.craco.sig.ps.PSPublicParameters;
-import de.upb.crypto.craco.sig.ps.PSPublicParametersGen;
-import de.upb.crypto.craco.sig.ps18.PS18SignatureScheme;
+import org.cryptimeleon.craco.sig.SignatureKeyPair;
+import org.cryptimeleon.craco.sig.SigningKey;
+import org.cryptimeleon.craco.sig.VerificationKey;
+import org.cryptimeleon.craco.sig.ps.PSPublicParameters;
+import org.cryptimeleon.craco.sig.ps.PSPublicParametersGen;
+import org.cryptimeleon.craco.sig.ps18.PS18SignatureScheme;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 

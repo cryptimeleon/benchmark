@@ -1,7 +1,7 @@
 package org.cryptimeleon.benchmark.util;
 
-import de.upb.crypto.craco.abe.interfaces.BigIntegerAttribute;
-import de.upb.crypto.craco.abe.interfaces.SetOfAttributes;
+import org.cryptimeleon.craco.common.attributes.BigIntegerAttribute;
+import org.cryptimeleon.craco.common.attributes.SetOfAttributes;
 
 public class AttributeUtils {
 

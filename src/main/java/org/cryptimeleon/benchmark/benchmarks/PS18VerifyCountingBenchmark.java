@@ -1,14 +1,16 @@
 package org.cryptimeleon.benchmark.benchmarks;
 
-import de.upb.crypto.craco.common.MessageBlock;
-import de.upb.crypto.craco.common.RingElementPlainText;
-import de.upb.crypto.craco.common.interfaces.PlainText;
-import de.upb.crypto.craco.sig.interfaces.Signature;
-import de.upb.crypto.craco.sig.interfaces.SignatureKeyPair;
-import de.upb.crypto.craco.sig.ps.PSPublicParameters;
-import de.upb.crypto.craco.sig.ps18.*;
-import de.upb.crypto.math.pairings.counting.CountingBilinearGroup;
-import de.upb.crypto.math.pairings.generic.BilinearGroup;
+import org.cryptimeleon.craco.common.plaintexts.MessageBlock;
+import org.cryptimeleon.craco.common.plaintexts.PlainText;
+import org.cryptimeleon.craco.common.plaintexts.RingElementPlainText;
+import org.cryptimeleon.craco.sig.Signature;
+import org.cryptimeleon.craco.sig.SignatureKeyPair;
+import org.cryptimeleon.craco.sig.ps.PSPublicParameters;
+import org.cryptimeleon.craco.sig.ps18.PS18SignatureScheme;
+import org.cryptimeleon.craco.sig.ps18.PS18SigningKey;
+import org.cryptimeleon.craco.sig.ps18.PS18VerificationKey;
+import org.cryptimeleon.math.structures.groups.counting.CountingBilinearGroup;
+import org.cryptimeleon.math.structures.groups.elliptic.BilinearGroup;
 
 public class PS18VerifyCountingBenchmark {
 

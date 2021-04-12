@@ -1,16 +1,16 @@
 package org.cryptimeleon.benchmark.craco.abe.Wat11Small;
 
 import org.cryptimeleon.benchmark.util.AttributeUtils;
-import de.upb.crypto.craco.abe.cp.small.ABECPWat11Small;
-import de.upb.crypto.craco.abe.cp.small.ABECPWat11SmallSetup;
-import de.upb.crypto.craco.abe.interfaces.SetOfAttributes;
-import de.upb.crypto.craco.common.GroupElementPlainText;
-import de.upb.crypto.craco.common.interfaces.CipherText;
-import de.upb.crypto.craco.common.interfaces.DecryptionKey;
-import de.upb.crypto.craco.common.interfaces.EncryptionKey;
-import de.upb.crypto.craco.common.interfaces.PlainText;
-import de.upb.crypto.craco.common.interfaces.policy.BooleanPolicy;
-import de.upb.crypto.math.serialization.Representation;
+import org.cryptimeleon.craco.common.attributes.SetOfAttributes;
+import org.cryptimeleon.craco.common.plaintexts.GroupElementPlainText;
+import org.cryptimeleon.craco.common.plaintexts.PlainText;
+import org.cryptimeleon.craco.common.policies.BooleanPolicy;
+import org.cryptimeleon.craco.enc.CipherText;
+import org.cryptimeleon.craco.enc.DecryptionKey;
+import org.cryptimeleon.craco.enc.EncryptionKey;
+import org.cryptimeleon.math.serialization.Representation;
+import org.cryptimeleon.predenc.abe.cp.small.ABECPWat11Small;
+import org.cryptimeleon.predenc.abe.cp.small.ABECPWat11SmallSetup;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.results.format.ResultFormatType;
