@@ -1,6 +1,7 @@
 package org.cryptimeleon.benchmark.benchmarks.group;
 
-import de.upb.crypto.math.interfaces.structures.group.impl.GroupImpl;
+
+import org.cryptimeleon.math.structures.groups.GroupImpl;
 
 /**
  * Parameters used in the {@link GroupImplPerformanceTest}.

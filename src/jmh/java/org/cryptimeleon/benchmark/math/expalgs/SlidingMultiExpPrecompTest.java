@@ -1,15 +1,13 @@
 package org.cryptimeleon.benchmark.math.expalgs;
 
-import de.upb.crypto.math.interfaces.structures.Group;
-import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
-import de.upb.crypto.math.pairings.generic.BilinearGroup;
-import de.upb.crypto.math.pairings.mcl.MclBilinearGroup;
-import de.upb.crypto.math.pairings.mcl.MclBilinearGroupImpl;
-import de.upb.crypto.math.structures.groups.exp.ExponentiationAlgorithms;
-import de.upb.crypto.math.structures.groups.exp.MultiExpTerm;
-import de.upb.crypto.math.structures.groups.exp.Multiexponentiation;
-import de.upb.crypto.math.structures.groups.lazy.LazyBilinearGroup;
-import de.upb.crypto.math.structures.groups.lazy.LazyGroupElement;
+import org.cryptimeleon.math.structures.groups.GroupElementImpl;
+import org.cryptimeleon.math.structures.groups.Group;
+import org.cryptimeleon.math.structures.groups.elliptic.BilinearGroup;
+import org.cryptimeleon.math.structures.groups.elliptic.type3.mcl.MclBilinearGroup;
+import org.cryptimeleon.math.structures.groups.exp.ExponentiationAlgorithms;
+import org.cryptimeleon.math.structures.groups.exp.MultiExpTerm;
+import org.cryptimeleon.math.structures.groups.exp.Multiexponentiation;
+import org.cryptimeleon.math.structures.groups.lazy.LazyGroupElement;
 import org.openjdk.jmh.annotations.*;
 
 import java.lang.reflect.InvocationTargetException;

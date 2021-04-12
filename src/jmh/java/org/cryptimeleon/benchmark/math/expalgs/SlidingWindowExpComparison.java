@@ -1,12 +1,12 @@
 package org.cryptimeleon.benchmark.math.expalgs;
 
-
-/*import de.upb.crypto.math.factory.BilinearGroup;
-import de.upb.crypto.math.factory.BilinearGroupFactory;
-import de.upb.crypto.math.interfaces.structures.Group;
-import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
-import de.upb.crypto.math.structures.groups.exp.ExponentiationAlgorithms;
-import de.upb.crypto.math.structures.groups.lazy.LazyGroupElement;
+/*import org.cryptimeleon.math.structures.groups.GroupElementImpl;
+import org.cryptimeleon.math.structures.groups.Group;
+import org.cryptimeleon.math.structures.groups.elliptic.BilinearGroup;
+import org.cryptimeleon.math.structures.groups.elliptic.type3.bn.BarretoNaehrigBilinearGroup;
+import org.cryptimeleon.math.structures.groups.exp.ExponentiationAlgorithms;
+import org.cryptimeleon.math.structures.groups.lazy.LazyGroupElement;
+import org.openjdk.jmh.annotations.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -26,9 +26,7 @@ public class SlidingWindowExpComparison {
 
     @Setup(Level.Iteration)
     public void setup() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        BilinearGroupFactory fac = new BilinearGroupFactory(128);
-        fac.setRequirements(BilinearGroup.Type.TYPE_3);
-        BilinearGroup bilGroup = fac.createBilinearGroup();
+        BilinearGroup bilGroup = new BarretoNaehrigBilinearGroup(128);
         Group selectedGroup;
         switch (groupSelection) {
             case "G1":

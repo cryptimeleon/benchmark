@@ -1,6 +1,6 @@
 package org.cryptimeleon.benchmark.craco.abe.Wat11;
 
-import de.upb.crypto.craco.abe.cp.large.ABECPWat11Setup;
+import org.cryptimeleon.predenc.abe.cp.large.ABECPWat11Setup;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.runner.Runner;

@@ -1,17 +1,17 @@
 package org.cryptimeleon.benchmark.benchmarks;
 
-import de.upb.crypto.craco.abe.cp.large.ABECPWat11;
-import de.upb.crypto.craco.abe.cp.large.ABECPWat11PublicParameters;
-import de.upb.crypto.craco.abe.cp.large.ABECPWat11Setup;
-import de.upb.crypto.craco.abe.interfaces.BigIntegerAttribute;
-import de.upb.crypto.craco.abe.interfaces.SetOfAttributes;
-import de.upb.crypto.craco.common.GroupElementPlainText;
-import de.upb.crypto.craco.common.interfaces.CipherText;
-import de.upb.crypto.craco.common.interfaces.DecryptionKey;
-import de.upb.crypto.craco.common.interfaces.policy.Policy;
-import de.upb.crypto.craco.common.interfaces.policy.ThresholdPolicy;
-import de.upb.crypto.math.interfaces.structures.GroupElement;
-import de.upb.crypto.math.structures.zn.Zp;
+import org.cryptimeleon.craco.common.attributes.BigIntegerAttribute;
+import org.cryptimeleon.craco.common.attributes.SetOfAttributes;
+import org.cryptimeleon.craco.common.plaintexts.GroupElementPlainText;
+import org.cryptimeleon.craco.common.policies.Policy;
+import org.cryptimeleon.craco.common.policies.ThresholdPolicy;
+import org.cryptimeleon.craco.enc.CipherText;
+import org.cryptimeleon.craco.enc.DecryptionKey;
+import org.cryptimeleon.math.structures.groups.GroupElement;
+import org.cryptimeleon.math.structures.rings.zn.Zp;
+import org.cryptimeleon.predenc.abe.cp.large.ABECPWat11;
+import org.cryptimeleon.predenc.abe.cp.large.ABECPWat11PublicParameters;
+import org.cryptimeleon.predenc.abe.cp.large.ABECPWat11Setup;
 
 /**
  * Old benchmark from Craco archived here.

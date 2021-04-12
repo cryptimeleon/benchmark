@@ -1,12 +1,12 @@
 package org.cryptimeleon.benchmark.benchmarks.pairing;
 
-import de.upb.crypto.math.expressions.group.GroupElementExpression;
-import de.upb.crypto.math.interfaces.structures.Group;
-import de.upb.crypto.math.interfaces.structures.GroupElement;
-import de.upb.crypto.math.pairings.generic.BilinearMap;
-import de.upb.crypto.math.pairings.type1.supersingular.SupersingularBilinearGroup;
-import de.upb.crypto.math.pairings.type3.bn.BarretoNaehrigBilinearGroup;
-import de.upb.crypto.math.structures.zn.Zn;
+import org.cryptimeleon.math.expressions.group.GroupElementExpression;
+import org.cryptimeleon.math.structures.groups.Group;
+import org.cryptimeleon.math.structures.groups.GroupElement;
+import org.cryptimeleon.math.structures.groups.elliptic.BilinearMap;
+import org.cryptimeleon.math.structures.groups.elliptic.type1.supersingular.SupersingularBilinearGroup;
+import org.cryptimeleon.math.structures.groups.elliptic.type3.bn.BarretoNaehrigBilinearGroup;
+import org.cryptimeleon.math.structures.rings.zn.Zn;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ public class PairingPerformanceTest {
             g1Elements.add(g1.getUniformlyRandomElement());
             g2Elements.add(g2.getUniformlyRandomElement());
             exponents.add(new Zn(g1.size()).getUniformlyRandomElement().getInteger());
-            expression.opPow(pairing.expr(g1Elements.get(i), g2Elements.get(i)), exponents.get(i));
+            expression.opPow(pairing.applyExpr(g1Elements.get(i), g2Elements.get(i)), exponents.get(i));
         }
 
         System.out.println("Testing " + pairing.getClass().getSimpleName() + " with " + numberOfElements + " pairings...");

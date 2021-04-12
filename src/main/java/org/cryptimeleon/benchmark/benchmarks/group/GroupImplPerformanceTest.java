@@ -1,8 +1,8 @@
 package org.cryptimeleon.benchmark.benchmarks.group;
 
-import de.upb.crypto.math.interfaces.structures.group.impl.GroupElementImpl;
-import de.upb.crypto.math.interfaces.structures.group.impl.GroupImpl;
-import de.upb.crypto.math.structures.zn.Zp;
+import org.cryptimeleon.math.structures.groups.GroupElementImpl;
+import org.cryptimeleon.math.structures.groups.GroupImpl;
+import org.cryptimeleon.math.structures.rings.zn.Zp;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
