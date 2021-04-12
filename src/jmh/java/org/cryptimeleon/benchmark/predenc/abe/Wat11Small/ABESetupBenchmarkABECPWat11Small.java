@@ -1,4 +1,4 @@
-package org.cryptimeleon.benchmark.craco.abe.Wat11Small;
+package org.cryptimeleon.benchmark.predenc.abe.Wat11Small;
 
 import org.cryptimeleon.benchmark.util.AttributeUtils;
 import org.cryptimeleon.craco.common.attributes.SetOfAttributes;

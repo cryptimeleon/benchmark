@@ -1,4 +1,4 @@
-package org.cryptimeleon.benchmark.craco.abe.Wat11;
+package org.cryptimeleon.benchmark.predenc.abe.Wat11;
 
 import org.cryptimeleon.predenc.abe.cp.large.ABECPWat11Setup;
 import org.openjdk.jmh.annotations.*;
